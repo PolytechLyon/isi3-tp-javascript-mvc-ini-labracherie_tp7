@@ -19,3 +19,10 @@ export const DEFAULT_ALIVE_PAIRS = [
   [6, 4],
   [8, 4]
 ];
+
+export const SQUARE = [
+  [3, 4],
+  [3, 3],
+  [2, 4],
+  [2, 3],
+];

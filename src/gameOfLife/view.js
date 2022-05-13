@@ -8,10 +8,10 @@ const drawCell = (x, y, value) => {
   context.fillRect(x + CELL_SIZE * x, y + CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
 };
 
-export const initView = () => {
-  document.getElementById("game").appendChild(canvas);
-  canvas.setAttribute("height", GAME_SIZE * CELL_SIZE + GAME_SIZE - 1);
-  canvas.setAttribute("width", GAME_SIZE * CELL_SIZE + GAME_SIZE - 1);
+export const initView = (height = GAME_SIZE, width = GAME_SIZE, first = true) => {
+  if (first) document.getElementById("game").appendChild(canvas);
+  canvas.setAttribute("height", height * CELL_SIZE + height - 1);
+  canvas.setAttribute("width", width * CELL_SIZE + width - 1);
 };
 
 export const drawGame = model => {
@@ -21,3 +21,4 @@ export const drawGame = model => {
     });
   });
 };
+
