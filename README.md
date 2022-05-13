@@ -27,12 +27,14 @@ Il a été inventé par [John Horton Conway](https://fr.wikipedia.org/wiki/John_
 
 1. Expliquer le design pattern MVC à l'aide d'un schéma à insérer directement ici.
 Utiliser un outils comme Dia pour le représenter. Je veux **votre** schéma, pas un de ceux qu'on peut trouver sur le net.
+![](./img/mvc.png)
 
 2. Expliquer ce pattern en complétant ce texte.
 
 Le pattern MVC, vise à découper le `.......`, de la `.......` et du `.......` afin de rendre le code plus `.......`.
 Les responsabilités ne sont alors plus `.......`.
 On peut ainsi changer l'aspect visuel de son application sans pour autant impacter le `.......`.
+Modèle, Vue, Contrôleur, indépendant, séparées, fonctionnement
 
 3. Expliquer dans quels cas on doit privilégier le pattern MVC.
 
