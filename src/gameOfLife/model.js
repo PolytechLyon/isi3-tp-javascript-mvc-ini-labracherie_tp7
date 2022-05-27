@@ -8,8 +8,8 @@ import {
 
 export class Model {
   constructor(width = GAME_SIZE, height = GAME_SIZE) {
-    this.width = width;
-    this.height = height;
+    this.width = width || GAME_SIZE;
+    this.height = height || GAME_SIZE;
     this.raf = null;
     this.observers = [];
   }
@@ -18,9 +18,12 @@ export class Model {
     this.state = Array.from(new Array(this.height), () =>
       Array.from(new Array(this.width), () => CELL_STATES.NONE)
     );
-    DEFAULT_ALIVE_PAIRS.forEach(([x, y]) => {
-      this.state[y][x] = CELL_STATES.ALIVE;
-    });
+
+    if (this.width >= 9 && this.height >= 7) {
+      DEFAULT_ALIVE_PAIRS.forEach(([x, y]) => {
+        this.state[y][x] = CELL_STATES.ALIVE;
+      });
+    }
     this.updated();
   }
 
@@ -34,20 +37,17 @@ export class Model {
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
             const nbAlive = this.aliveNeighbours(j, i);
-            if (nbAlive > 0) {
-              console.log({i, j, nbAlive})
-            }
 
             if (nbAlive === 3) {
               if (changes[CELL_STATES.ALIVE] === undefined) {
                 changes[CELL_STATES.ALIVE] = [];
               }
-              changes[CELL_STATES.ALIVE].push({y : i, x : j});
+              changes[CELL_STATES.ALIVE].push({ y: i, x: j });
             } else if (nbAlive != 2 && this.state[i][j] !== CELL_STATES.NONE) {
               if (changes[CELL_STATES.DEAD] === undefined) {
                 changes[CELL_STATES.DEAD] = [];
               }
-              changes[CELL_STATES.DEAD].push({y : i, x : j});
+              changes[CELL_STATES.DEAD].push({ y: i, x: j });
             }
           }
         }
@@ -84,7 +84,7 @@ export class Model {
   aliveNeighbours(x, y) {
     let number = 0;
 
-    for (let i = x - 1; i < x + 2; i++){
+    for (let i = x - 1; i < x + 2; i++) {
       for (let j = y - 1; j < y + 2; j++) {
         if (i === x && j === y) continue;
         number += this.isCellAlive(i, j);
@@ -92,6 +92,21 @@ export class Model {
     }
 
     return number;
+  }
+
+  toggleState(x, y) {
+    switch (this.state[y][x]) {
+      case CELL_STATES.NONE:
+        this.state[y][x] = CELL_STATES.ALIVE;
+        break;
+      case CELL_STATES.ALIVE:
+        this.state[y][x] = CELL_STATES.DEAD;
+        break;
+      case CELL_STATES.DEAD:
+        this.state[y][x] = CELL_STATES.NONE;
+        break;
+    }
+    this.updated();
   }
 
   updated() {
